@@ -1,18 +1,3 @@
----
-page_type: sample
-languages:
-- javascript
-products:
-- azure
-- ms-graph
-- microsoft-identity-platform
-- azure-openai
-name: React single-page app (SPA) that signs in user and integrates with Azure OpenAI
-url-fragment: msal-react-single-page-app-openai
-description: This React application demonstrates usage of the Microsoft Authentication Library for React (MSAL React) to sign in Microsoft Entra users (authentication), call a protected web API (authorization), integrate with Azure OpenAI using Entra ID, and sign out users.
----
-
-
 # React single-page app (SPA) | Sign in users, call protected API and Azure OpenAI | Microsoft identity platform
 
 This React application demonstrates usage of the Microsoft Authentication Library for React (MSAL React) to:
