@@ -6,6 +6,9 @@
 .navbarStyle {
   padding: .5rem 1rem !important;
   box-shadow: none;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .profileContent {
