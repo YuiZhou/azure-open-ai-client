@@ -39,7 +39,11 @@ export const PageLayout = (props) => {
                 </div>
             </Navbar>
             
-            <SideMenu isOpen={isSideMenuOpen} onClose={closeSideMenu} />
+            <SideMenu 
+                isOpen={isSideMenuOpen} 
+                onClose={closeSideMenu} 
+                onSelectConversation={props.onSelectConversation}
+            />
             
             <div className="profileContent">
                 {props.children}

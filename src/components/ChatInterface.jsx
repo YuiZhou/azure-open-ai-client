@@ -1,15 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useMsal } from "@azure/msal-react";
 import ReactMarkdown from "react-markdown";
+import { v4 } from 'uuid';
 import { sendMessageToOpenAI, formatConversationForOpenAI, initializeOpenAIClient } from "../openaiService";
+import { saveConversation, generateConversationTitle } from "../conversationStorage";
 import "./ChatInterface.css";
 
-const ChatInterface = () => {
+const ChatInterface = ({ savedConversation }) => {
     const { instance, accounts } = useMsal();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [conversationId, setConversationId] = useState(null);
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);    // Helper function to format timestamp in mm-dd HH:MM format
     const formatTimestamp = (date) => {
@@ -40,6 +43,23 @@ const ChatInterface = () => {
         
         initClient();
     }, [instance, accounts]);
+    
+    // Automatically save conversation whenever messages change
+    useEffect(() => {
+        if (messages.length > 0) {
+            saveCurrentConversation();
+        }
+    }, [messages]);    // Handle loading a saved conversation
+    useEffect(() => {
+        if (savedConversation) {
+            setMessages(savedConversation.messages);
+            setConversationId(savedConversation.id);
+        } else {
+            // Generate a new conversation ID if this is a new conversation
+            setConversationId(v4());
+            setMessages([]);
+        }
+    }, [savedConversation]);
 
     // Scroll to bottom when messages change
     useEffect(() => {
@@ -59,8 +79,24 @@ const ChatInterface = () => {
 
     const handleInputChange = (e) => {
         setInput(e.target.value);
-    };    const handleSubmit = async (e) => {
-        e.preventDefault();        if (!input.trim()) return;
+    };    // Save the current conversation to localStorage
+    const saveCurrentConversation = () => {
+        if (!messages || messages.length === 0) return;
+        
+        const title = generateConversationTitle(messages);
+        const conversation = {
+            id: conversationId,
+            title: title,
+            messages: messages,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Save conversation without triggering a state update
+        saveConversation(conversation);
+    };const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!input.trim()) return;
 
         // Add user message to chat with timestamp
         const userMessage = { 
@@ -87,16 +123,20 @@ const ChatInterface = () => {
                 instance,
                 accounts[0],
                 conversationHistory
-            );            if (response.success && response.message) {
+            );
+            
+            if (response.success && response.message) {
                 // Add assistant response to chat with timestamp
-                setMessages(prevMessages => [
-                    ...prevMessages, 
+                const newMessages = [
+                    ...messages,
+                    userMessage,
                     { 
                         role: "assistant", 
                         content: response.message.content,
                         timestamp: formatTimestamp(new Date())
-                    }
-                ]);
+                    }                ];
+                
+                setMessages(newMessages);
             } else {
                 // Add error message with timestamp
                 setError(response.error || "Failed to get response");
@@ -132,7 +172,10 @@ const ChatInterface = () => {
                     <p>{error}</p>
                     <button onClick={() => setError(null)}>×</button>
                 </div>
-            )}
+            )}            
+            <div className="chat-header">
+                <h3>{savedConversation?.title || "New Chat"}</h3>
+            </div>
             
             <div className="chat-messages">
                 {messages.length === 0 ? (

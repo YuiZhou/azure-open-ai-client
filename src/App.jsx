@@ -71,12 +71,24 @@ const MainContent = () => {
 };
 
 export default function App() {
+    const [selectedConversation, setSelectedConversation] = useState(null);
+    const [chatKey, setChatKey] = useState(Date.now()); // Add a key for the ChatInterface
+
+    const handleSelectConversation = (conversation) => {
+        setSelectedConversation(conversation);
+        // Generate a new key whenever the conversation changes, including when starting a new chat
+        setChatKey(Date.now());
+    };
+
     return (
         <Router>
-            <PageLayout>
+            <PageLayout onSelectConversation={handleSelectConversation}>
                 <Routes>
                     <Route path="/" element={<MainContent />} />
-                    <Route path="/openai" element={<OpenAIPage />} />
+                    <Route path="/openai" element={<OpenAIPage 
+                        selectedConversation={selectedConversation} 
+                        chatKey={chatKey} 
+                    />} />
                 </Routes>
             </PageLayout>
         </Router>

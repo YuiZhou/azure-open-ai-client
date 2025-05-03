@@ -77,6 +77,19 @@
   text-decoration: none;
 }
 
+.side-menu-link.new-chat {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.side-menu-link.new-chat:hover {
+  background-color: #f5f5f5;
+  color: #0078d4;
+}
+
 .menu-toggle {
   background: none;
   border: none;
@@ -119,4 +132,83 @@
 
 .menu-toggle-icon:after {
   bottom: -6px;
+}
+
+/* Saved conversations section */
+.saved-conversations-section {
+  margin-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 15px;
+}
+
+.section-title {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+  padding: 0 15px;
+}
+
+.saved-conversations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.saved-conversation-item {
+  padding: 12px 15px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  border-left: 3px solid #0078d4;
+  transition: background-color 0.2s;
+}
+
+.saved-conversation-item:hover {
+  background-color: #f0f0f0;
+}
+
+.conversation-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.conversation-timestamp {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.delete-conversation-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.saved-conversation-item:hover .delete-conversation-btn {
+  display: flex;
+}
+
+.delete-conversation-btn:hover {
+  background-color: #f5f5f5;
+  color: #d83b01;
+}
+
+.new-chat-icon {
+  font-size: 1rem;
+  margin-right: 8px;
 }

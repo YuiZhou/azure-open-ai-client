@@ -274,3 +274,41 @@
     max-width: 100%;
     height: auto;
 }
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #f5f5f5;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 70%;
+}
+
+.save-conversation-button {
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.save-conversation-button:hover {
+    background-color: #006cbf;
+}
+
+.save-conversation-button:active {
+    background-color: #005ba1;
+}
