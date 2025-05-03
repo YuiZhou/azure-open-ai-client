@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useMsal } from "@azure/msal-react";
+import ReactMarkdown from "react-markdown";
 import { sendMessageToOpenAI, formatConversationForOpenAI, initializeOpenAIClient } from "../openaiService";
 import "./ChatInterface.css";
 
@@ -10,7 +11,17 @@ const ChatInterface = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const messagesEndRef = useRef(null);
-    const inputRef = useRef(null);    // Initialize OpenAI client when component mounts
+    const inputRef = useRef(null);    // Helper function to format timestamp in mm-dd HH:MM format
+    const formatTimestamp = (date) => {
+        const pad = (num) => (num < 10 ? '0' + num : num);
+        const month = pad(date.getMonth() + 1);
+        const day = pad(date.getDate());
+        const hours = pad(date.getHours());
+        const minutes = pad(date.getMinutes());
+        return `${month}/${day} ${hours}:${minutes}`;
+    };
+    
+    // Initialize OpenAI client when component mounts
     useEffect(() => {
         const initClient = async () => {
             if (instance && accounts && accounts.length > 0) {
@@ -49,11 +60,14 @@ const ChatInterface = () => {
     const handleInputChange = (e) => {
         setInput(e.target.value);
     };    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!input.trim()) return;
+        e.preventDefault();        if (!input.trim()) return;
 
-        // Add user message to chat
-        const userMessage = { role: "user", content: input };
+        // Add user message to chat with timestamp
+        const userMessage = { 
+            role: "user", 
+            content: input, 
+            timestamp: formatTimestamp(new Date())
+        };
         setMessages(prevMessages => [...prevMessages, userMessage]);
         setInput("");
         setIsLoading(true);
@@ -73,39 +87,39 @@ const ChatInterface = () => {
                 instance,
                 accounts[0],
                 conversationHistory
-            );
-
-            if (response.success && response.message) {
-                // Add assistant response to chat
+            );            if (response.success && response.message) {
+                // Add assistant response to chat with timestamp
                 setMessages(prevMessages => [
                     ...prevMessages, 
                     { 
                         role: "assistant", 
-                        content: response.message.content
+                        content: response.message.content,
+                        timestamp: formatTimestamp(new Date())
                     }
                 ]);
             } else {
-                // Add error message
+                // Add error message with timestamp
                 setError(response.error || "Failed to get response");
                 setMessages(prevMessages => [
                     ...prevMessages, 
                     { 
                         role: "assistant", 
                         content: `Error: ${response.error || "Something went wrong"}`,
-                        isError: true 
+                        isError: true,
+                        timestamp: formatTimestamp(new Date())
                     }
                 ]);
-            }
-        } catch (error) {
+            }        } catch (error) {
             console.error("Error in chat:", error);
             setError(error.message || "An unexpected error occurred");
-            // Add error message
+            // Add error message with timestamp
             setMessages(prevMessages => [
                 ...prevMessages, 
                 { 
                     role: "assistant", 
                     content: `Error: ${error.message || "Something went wrong"}`,
-                    isError: true 
+                    isError: true,
+                    timestamp: formatTimestamp(new Date())
                 }
             ]);
         } finally {
@@ -125,17 +139,21 @@ const ChatInterface = () => {
                     <div className="empty-chat">
                         <p>Start a conversation with Azure OpenAI</p>
                     </div>
-                ) : (
-                    messages.map((message, index) => (
+                ) : (                    messages.map((message, index) => (
                         <div 
                             key={index} 
                             className={`message ${message.role === "user" ? "user-message" : "assistant-message"} ${message.isError ? "error-message" : ""}`}
                         >
                             <div className="message-bubble">
-                                <p>{message.content}</p>
+                                {message.role === "assistant" ? (
+                                    <div className="markdown-content">
+                                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                                    </div>
+                                ) : (
+                                    <p>{message.content}</p>                                )}
                             </div>
                             <div className="message-info">
-                                {message.role === "user" ? "You" : "Assistant"}
+                                {message.role === "user" ? "You" : "Assistant"} • {message.timestamp || formatTimestamp(new Date())}
                             </div>
                         </div>
                     ))
@@ -146,10 +164,9 @@ const ChatInterface = () => {
                             <div className="typing-indicator">
                                 <span></span>
                                 <span></span>
-                                <span></span>
-                            </div>
+                                <span></span>                            </div>
                         </div>
-                        <div className="message-info">Assistant</div>
+                        <div className="message-info">Assistant • {formatTimestamp(new Date())}</div>
                     </div>
                 )}
                 <div ref={messagesEndRef}></div>

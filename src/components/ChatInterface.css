@@ -78,6 +78,10 @@
     word-break: break-word;
 }
 
+.message-bubble p {
+    margin: 0;
+}
+
 .user-message .message-bubble {
     background-color: #0078d4;
     color: white;
@@ -100,6 +104,8 @@
     margin-top: 4px;
     color: #666;
     padding: 0 8px;
+    display: flex;
+    align-items: center;
 }
 
 .chat-input-form {
@@ -182,4 +188,89 @@
     0% { opacity: 0.4; transform: scale(1); }
     50% { opacity: 1; transform: scale(1.2); }
     100% { opacity: 0.4; transform: scale(1); }
+}
+
+/* Markdown content styling */
+.markdown-content {
+    width: 100%;
+}
+
+.markdown-content h1, 
+.markdown-content h2, 
+.markdown-content h3, 
+.markdown-content h4, 
+.markdown-content h5, 
+.markdown-content h6 {
+    margin-top: 0.8em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.markdown-content h1 {
+    font-size: 1.6em;
+}
+
+.markdown-content h2 {
+    font-size: 1.4em;
+}
+
+.markdown-content h3 {
+    font-size: 1.2em;
+}
+
+.markdown-content p {
+    margin: 0.5em 0;
+}
+
+.markdown-content ul, 
+.markdown-content ol {
+    padding-left: 1.5em;
+    margin: 0.5em 0;
+}
+
+.markdown-content li {
+    margin: 0.25em 0;
+}
+
+.markdown-content code {
+    background-color: rgba(0, 0, 0, 0.08);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.markdown-content pre {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 0.5em 0;
+}
+
+.markdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.markdown-content a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.markdown-content a:hover {
+    text-decoration: underline;
+}
+
+.markdown-content blockquote {
+    border-left: 3px solid #ddd;
+    margin: 0.5em 0;
+    padding-left: 1em;
+    color: #666;
+}
+
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
 }
