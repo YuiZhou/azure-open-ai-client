@@ -1,7 +1,21 @@
 .openai-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
+    width: 100vw;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+/* Add media query for mobile responsiveness */
+@media (max-width: 768px) {
+    .openai-page {
+        padding: 0;
+    }
 }
 
 .openai-page h1 {
@@ -16,8 +30,9 @@
     padding: 20px;
     text-align: center;
     color: #666;
-    margin-bottom: 30px;
+    margin: 0 auto 30px;
     border: 1px solid #e9e9e9;
+    max-width: 700px;
 }
 
 .config-tip {
@@ -37,8 +52,9 @@
     padding: 30px;
     text-align: center;
     color: #333;
-    margin-bottom: 30px;
+    margin: 0 auto 30px;
     border: 1px solid #e9e9e9;
+    max-width: 700px;
 }
 
 .auth-button {

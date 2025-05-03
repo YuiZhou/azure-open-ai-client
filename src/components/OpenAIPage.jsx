@@ -63,8 +63,6 @@ const OpenAIPage = () => {
         setIsConfigValid(isValid);
     };    return (
         <div className="openai-page">
-            <h1>Azure OpenAI Chat</h1>
-            
             <AuthenticatedTemplate>
                 {isCheckingScope ? (
                     <div className="openai-message loading-message">
