@@ -16,11 +16,10 @@ const SideMenu = ({ isOpen, onClose }) => {
         <div className="side-menu-header">
           <button className="side-menu-close" onClick={onClose}>×</button>
           <h3>Menu</h3>
-        </div>
-        <div className="side-menu-content">
+        </div>        <div className="side-menu-content">
           <nav className="side-menu-nav">
-            <Link to="/" className="side-menu-link" onClick={onClose}>Home</Link>
-            <Link to="/openai" className="side-menu-link" onClick={onClose}>Azure OpenAI Chat</Link>
+            <Link to="/" className="side-menu-link" onClick={onClose}>settings</Link>
+            <Link to="/openai" className="side-menu-link" onClick={onClose}>Chat</Link>
           </nav>
         </div>
       </div>

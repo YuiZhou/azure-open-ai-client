@@ -6,6 +6,8 @@ import { loginRequest } from './authConfig';
 import { callMsGraph } from './graph';
 import { ProfileData } from './components/ProfileData';
 import OpenAIPage from './components/OpenAIPage';
+import OpenAIConfig from './components/OpenAIConfig';
+import { isOpenAIConfigValid } from './openaiConfig';
 
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import './App.css';
@@ -49,19 +51,20 @@ const ProfileContent = () => {
  * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
  */
 const MainContent = () => {
+    const [isConfigValid, setIsConfigValid] = useState(false);
+
+    const handleConfigChange = (isValid) => {
+        setIsConfigValid(isValid);
+    };
+
     return (
         <div className="App">
-            <div className="nav-links">
-                <Link to="/" className="nav-link">Home</Link>
-                <Link to="/openai" className="nav-link">Azure OpenAI Chat</Link>
-            </div>
-            
             <AuthenticatedTemplate>
-                <ProfileContent />
+                <OpenAIConfig onConfigChange={handleConfigChange} />
             </AuthenticatedTemplate>
 
             <UnauthenticatedTemplate>
-                <h5 className="card-title">Please sign-in to see your profile information.</h5>
+                <h5 className="card-title">Please sign-in to configure Azure OpenAI settings.</h5>
             </UnauthenticatedTemplate>
         </div>
     );
