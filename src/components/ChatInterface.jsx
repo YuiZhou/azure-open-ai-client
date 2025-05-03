@@ -64,22 +64,26 @@ const ChatInterface = ({ savedConversation }) => {
     // Scroll to bottom when messages change
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
-
-    // Focus the input field when component mounts
+    }, [messages]);    // Focus the input field when component mounts
     useEffect(() => {
         if (inputRef.current) {
             inputRef.current.focus();
+            // Set initial height for textarea
+            inputRef.current.style.height = 'auto';
+            inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, 150)}px`;
         }
     }, []);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    const handleInputChange = (e) => {
+    };    const handleInputChange = (e) => {
         setInput(e.target.value);
-    };    // Save the current conversation to localStorage
+        
+        // Auto-resize the textarea
+        const textarea = e.target;
+        textarea.style.height = 'auto'; // Reset height
+        textarea.style.height = `${Math.min(textarea.scrollHeight, 150)}px`; // Set new height with max of 150px
+    };// Save the current conversation to localStorage
     const saveCurrentConversation = () => {
         if (!messages || messages.length === 0) return;
         
@@ -213,19 +217,34 @@ const ChatInterface = ({ savedConversation }) => {
                     </div>
                 )}
                 <div ref={messagesEndRef}></div>
-            </div>
-
-            <form className="chat-input-form" onSubmit={handleSubmit}>
-                <input
-                    type="text"
+            </div>            <form className="chat-input-form" onSubmit={handleSubmit}>                <textarea
                     value={input}
                     onChange={handleInputChange}
                     placeholder="Type your message..."
                     ref={inputRef}
                     disabled={isLoading}
-                />
-                <button type="submit" disabled={isLoading || !input.trim()}>
-                    {isLoading ? "Sending..." : "Send"}
+                    rows="1"
+                    className="chat-input-textarea"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            if (input.trim()) {
+                                handleSubmit(e);
+                            }
+                        }
+                    }}
+                />                <button 
+                    type="submit" 
+                    disabled={isLoading || !input.trim()} 
+                    className="send-button"
+                    aria-label="Send message"
+                >
+                    {isLoading ? (
+                        <span className="sending-indicator"></span>
+                    ) : (                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
+                        </svg>
+                    )}
                 </button>
             </form>
         </div>
