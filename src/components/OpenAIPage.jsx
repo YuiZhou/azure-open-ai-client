@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { 
     AuthenticatedTemplate, 
     UnauthenticatedTemplate, 
@@ -8,6 +8,7 @@ import {
 import { isOpenAIConfigValid, getOpenAIConfig } from "../openaiConfig";
 import { openaiConfig } from "../authConfig";
 import ChatInterface from "./ChatInterface";
+import OpenAIConfig from "./OpenAIConfig";
 import "./OpenAIPage.css";
 
 const OpenAIPage = ({ selectedConversation, chatKey }) => {
@@ -72,8 +73,7 @@ const OpenAIPage = ({ selectedConversation, chatKey }) => {
                     <div className="openai-message loading-message">
                         <p>Checking Azure OpenAI permissions...</p>
                     </div>                ) : isConfigValid ? (
-                    hasAzureOpenAIScope ? (
-                        <ChatInterface 
+                    hasAzureOpenAIScope ? (                        <ChatInterface 
                             key={chatKey} 
                             savedConversation={selectedConversation} 
                         />
@@ -87,13 +87,15 @@ const OpenAIPage = ({ selectedConversation, chatKey }) => {
                     )
                 ) : (
                     <div className="openai-message">
-                        <p>Please complete the Azure OpenAI configuration in the settings page to continue.</p>
+                        <p>Please complete the Azure OpenAI configuration below to continue.</p>
                         <p className="config-tip">You'll need your Azure OpenAI endpoint and model/deployment name.</p>
+                        <OpenAIConfig onConfigChange={handleConfigChange} />
                     </div>
                 )}
             </AuthenticatedTemplate>
             
-            <UnauthenticatedTemplate>                <div className="openai-auth-container">
+            <UnauthenticatedTemplate>
+                <div className="openai-auth-container">
                     <p>You need to sign in to use Azure OpenAI Chat.</p>
                     <p>This application integrates with your Azure OpenAI service using Microsoft Entra ID authentication.</p>
                 </div>

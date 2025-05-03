@@ -3,9 +3,8 @@
  * Licensed under the MIT License.
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
 
 import { useIsAuthenticated } from '@azure/msal-react';
 import { SignInButton } from './SignInButton';
