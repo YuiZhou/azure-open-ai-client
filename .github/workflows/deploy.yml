@@ -22,32 +22,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Install json tool
-        run: npm install -g json
-        
-      - name: Create .env file
-        run: |
-          REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
-          OWNER_NAME=$(echo $GITHUB_REPOSITORY_OWNER)
-          echo "REACT_APP_AZURE_AD_CLIENT_ID=${{ secrets.REACT_APP_AZURE_AD_CLIENT_ID }}" > .env
-          echo "REACT_APP_AZURE_TENANT_ID=${{ secrets.REACT_APP_AZURE_TENANT_ID }}" >> .env
-          echo "REACT_APP_HOSTNAME=https://${OWNER_NAME}.github.io/${REPO_NAME}" >> .env
-        
-      - name: Set homepage in package.json
-        run: |
-          REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
-          OWNER_NAME=$(echo $GITHUB_REPOSITORY_OWNER)
-          npx json -I -f package.json -e "this.homepage=\"https://${OWNER_NAME}.github.io/${REPO_NAME}\""
-        
       - name: Build
-        run: |
-          REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
-          OWNER_NAME=$(echo $GITHUB_REPOSITORY_OWNER)
-          export REACT_APP_HOSTNAME="https://${OWNER_NAME}.github.io/${REPO_NAME}"
-          npm run build
+        run: npm run build
         env:
           REACT_APP_AZURE_AD_CLIENT_ID: ${{ secrets.REACT_APP_AZURE_AD_CLIENT_ID }}
           REACT_APP_AZURE_TENANT_ID: ${{ secrets.REACT_APP_AZURE_TENANT_ID }}
+          EACT_APP_HOSTNAME: https://${OWNER_NAME}.github.io/${REPO_NAME}
         
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
