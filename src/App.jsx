@@ -84,11 +84,11 @@ export default function App() {
         <Router>
             <PageLayout onSelectConversation={handleSelectConversation}>
                 <Routes>
-                    <Route path="/" element={<MainContent />} />
-                    <Route path="/openai" element={<OpenAIPage 
+                    <Route path="/" element={<OpenAIPage 
                         selectedConversation={selectedConversation} 
                         chatKey={chatKey} 
                     />} />
+                    <Route path="/openai" element={<MainContent />} />
                 </Routes>
             </PageLayout>
         </Router>

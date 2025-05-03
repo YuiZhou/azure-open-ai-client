@@ -32,7 +32,7 @@ const SideMenu = ({ isOpen, onClose, onSelectConversation }) => {
     if (onSelectConversation) {
       onSelectConversation(conversation);
     }
-    navigate('/openai');
+    navigate('/');
     onClose();
   };
 
@@ -41,7 +41,7 @@ const SideMenu = ({ isOpen, onClose, onSelectConversation }) => {
     if (onSelectConversation) {
       onSelectConversation(null);
     }
-    navigate('/openai');
+    navigate('/');
     onClose();
   };
 
@@ -62,7 +62,7 @@ const SideMenu = ({ isOpen, onClose, onSelectConversation }) => {
         <div className="side-menu-content">
           <nav className="side-menu-nav">
             <div className="menu-fixed-items">
-              <Link to="/" className="side-menu-link" onClick={onClose}>Settings</Link>
+              <Link to="/openai" className="side-menu-link" onClick={onClose}>Settings</Link>
               <div className="side-menu-link new-chat" onClick={handleNewChat}>
                 <span className="new-chat-icon">New Chat</span>
               </div>
