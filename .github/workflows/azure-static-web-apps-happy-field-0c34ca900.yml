@@ -45,6 +45,10 @@ jobs:
           output_location: "build" # Built app content directory - optional
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
+        env:
+          REACT_APP_AZURE_AD_CLIENT_ID: ${{ secrets.REACT_APP_AZURE_AD_CLIENT_ID }}
+          REACT_APP_AZURE_TENANT_ID: ${{ secrets.REACT_APP_AZURE_TENANT_ID }}
+          REACT_APP_HOSTNAME: ${{ secrets.AZURE_STATIC_WEB_APP_HOSTNAME }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
