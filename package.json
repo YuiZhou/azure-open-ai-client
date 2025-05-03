@@ -2,6 +2,7 @@
   "name": "ms-identity-javascript-react-spa",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@azure/msal-browser": "^2.32.2",
     "@azure/msal-react": "^1.5.2",
