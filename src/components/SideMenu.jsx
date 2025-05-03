@@ -61,34 +61,38 @@ const SideMenu = ({ isOpen, onClose, onSelectConversation }) => {
         </div>
         <div className="side-menu-content">
           <nav className="side-menu-nav">
-            <Link to="/" className="side-menu-link" onClick={onClose}>Settings</Link>
-            <div className="side-menu-link new-chat" onClick={handleNewChat}>
-              <span className="new-chat-icon">New Chat</span>
+            <div className="menu-fixed-items">
+              <Link to="/" className="side-menu-link" onClick={onClose}>Settings</Link>
+              <div className="side-menu-link new-chat" onClick={handleNewChat}>
+                <span className="new-chat-icon">New Chat</span>
+              </div>
             </div>
             
             {savedConversations.length > 0 && (
               <div className="saved-conversations-section">
                 <h4 className="section-title">Saved Conversations</h4>
-                <div className="saved-conversations-list">
-                  {savedConversations.map(conversation => (
-                    <div 
-                      key={conversation.id} 
-                      className="saved-conversation-item"
-                      onClick={() => handleSelectConversation(conversation)}
-                    >
-                      <div className="conversation-title">{conversation.title}</div>
-                      <div className="conversation-timestamp">
-                        {new Date(conversation.timestamp).toLocaleDateString()}
-                      </div>
-                      <button 
-                        className="delete-conversation-btn"
-                        onClick={(e) => handleDeleteConversation(e, conversation.id)}
-                        title="Delete conversation"
+                <div className="saved-conversations-container">
+                  <div className="saved-conversations-list">
+                    {savedConversations.map(conversation => (
+                      <div 
+                        key={conversation.id} 
+                        className="saved-conversation-item"
+                        onClick={() => handleSelectConversation(conversation)}
                       >
-                        ×
-                      </button>
-                    </div>
-                  ))}
+                        <div className="conversation-title">{conversation.title}</div>
+                        <div className="conversation-timestamp">
+                          {new Date(conversation.timestamp).toLocaleDateString()}
+                        </div>
+                        <button 
+                          className="delete-conversation-btn"
+                          onClick={(e) => handleDeleteConversation(e, conversation.id)}
+                          title="Delete conversation"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}

@@ -21,12 +21,14 @@
   top: 0;
   left: -280px;
   width: 280px;
-  height: 100%;
+  height: 100vh; /* Use viewport height */
   background-color: white;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   transition: left 0.3s ease;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent whole menu scrolling */
 }
 
 .side-menu.open {
@@ -54,12 +56,18 @@
 }
 
 .side-menu-content {
-  padding: 15px;
+  padding: 15px 15px 0 15px; /* Remove bottom padding */
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 56px); /* Calculate height based on header height */
+  overflow: hidden; /* Hide overflow to prevent menu scrolling */
 }
 
 .side-menu-nav {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden; /* Hide overflow to prevent full nav scrolling */
 }
 
 .side-menu-link {
@@ -69,6 +77,7 @@
   border-radius: 4px;
   margin-bottom: 5px;
   transition: background-color 0.2s;
+  flex-shrink: 0; /* Prevent menu items from shrinking */
 }
 
 .side-menu-link:hover {
@@ -139,6 +148,11 @@
   margin-top: 20px;
   border-top: 1px solid #e0e0e0;
   padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+  max-height: calc(100vh - 150px); /* Set a max height based on viewport height */
+  overflow: hidden; /* Hide any overflow */
 }
 
 .section-title {
@@ -146,12 +160,41 @@
   color: #666;
   margin-bottom: 10px;
   padding: 0 15px;
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.saved-conversations-container {
+  overflow-y: auto; /* Enable vertical scrolling */
+  flex: 1;
+  height: 100%; /* Take full height of parent */
+}
+
+/* Custom scrollbar for saved conversations */
+.saved-conversations-container::-webkit-scrollbar {
+  width: 5px;
+  z-index: 1000;
+}
+
+.saved-conversations-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.saved-conversations-container::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 10px;
+}
+
+.saved-conversations-container::-webkit-scrollbar-thumb:hover {
+  background: #999999;
 }
 
 .saved-conversations-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 0 5px 15px 0; /* Add more bottom padding for spacing */
+  height: auto; /* Let it grow naturally */
 }
 
 .saved-conversation-item {
@@ -211,4 +254,16 @@
 .new-chat-icon {
   font-size: 1rem;
   margin-right: 8px;
+}
+
+.menu-fixed-items {
+  flex-shrink: 0; /* Prevent these items from shrinking */
+  margin-bottom: 5px;
+}
+
+/* Support for mobile devices */
+@supports (-webkit-overflow-scrolling: touch) {
+  .saved-conversations-container {
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
 }
