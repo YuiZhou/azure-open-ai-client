@@ -74,13 +74,8 @@ export const SignOutButton = () => {
                 className="ml-auto" 
                 drop="down" 
                 align="end"
-                title={userName}
+                title={graphData && graphData.userPrincipalName ? `${userName}` : userName}
             >
-                {graphData && (
-                    <Dropdown.Item disabled>
-                        {graphData.userPrincipalName}
-                    </Dropdown.Item>
-                )}
                 <Dropdown.Item as="button" onClick={handleRequestProfile}>
                     View Profile
                 </Dropdown.Item>
