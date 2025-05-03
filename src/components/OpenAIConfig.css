@@ -1,0 +1,52 @@
+.openai-config-container {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.openai-config-container h2 {
+    margin-top: 0;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.config-form .form-group {
+    margin-bottom: 15px;
+}
+
+.config-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.config-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.config-form small {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.config-status {
+    margin-top: 15px;
+}
+
+.valid-config {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.invalid-config {
+    color: #dc3545;
+    font-weight: bold;
+}
