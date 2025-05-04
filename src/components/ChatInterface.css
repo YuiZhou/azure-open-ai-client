@@ -8,6 +8,8 @@
     background-color: #fff;
     overflow: hidden;
     position: relative;
+    touch-action: manipulation; /* Controls how touchscreen users can interact with element */
+    overscroll-behavior: contain; /* Prevents bounce effects on iOS */
 }
 
 .chat-error-banner {
@@ -41,6 +43,9 @@
     max-width: 1200px;
     margin: 0 auto;
     box-sizing: border-box;
+    touch-action: pan-y; /* Only allow vertical scrolling */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+    overscroll-behavior: contain; /* Prevent pull-to-refresh in iOS */
 }
 
 .empty-chat {
@@ -365,4 +370,31 @@
 
 .save-conversation-button:active {
     background-color: #005ba1;
+}
+
+/* iOS specific touch handling */
+@supports (-webkit-touch-callout: none) {
+    .chat-container {
+        /* Fix for iOS virtual keyboard issues */
+        height: -webkit-fill-available;
+    }
+    
+    .chat-messages {
+        /* Better scroll behavior on iOS */
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .chat-input-container {
+        /* Prevent unwanted zooming when focusing on input */
+        font-size: 16px; /* iOS doesn't zoom on inputs ≥ 16px */
+    }
+}
+
+/* Make touch targets bigger on mobile */
+@media (max-width: 768px) {
+    button, 
+    input[type="submit"] {
+        min-height: 44px; /* Apple's recommended touch target size */
+        min-width: 44px;
+    }
 }

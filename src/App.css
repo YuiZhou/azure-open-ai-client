@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   padding: 8px;
+  touch-action: manipulation; /* Prevents unwanted touch behaviors */
 }
 
 .navbarStyle {
@@ -63,11 +64,28 @@
   /* For iOS devices */
   body, html {
     height: -webkit-fill-available;
+    overscroll-behavior: none; /* Prevents bounce effect on iOS */
+    touch-action: manipulation; /* Controls how touchscreen users can interact with element */
+    -webkit-overflow-scrolling: auto; /* Prevents momentum scrolling */
   }
   
   .navbarStyle {
     position: sticky;
   }
+}
+
+/* Prevent pull-to-refresh and other iOS gestures */
+body {
+  overscroll-behavior-y: contain;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Prevent touch move/zoom events on specific elements like chat area */
+.chat-container {
+  touch-action: pan-y; /* Allow only vertical touch scrolling */
 }
 
 /* Menu positioning styles */
