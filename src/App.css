@@ -9,10 +9,14 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }
 
 .profileContent {
-  padding: 0;
   width: 100%;
   overflow-x: hidden;
 }
@@ -37,4 +41,67 @@
   background-color: #f0f0f0;
   text-decoration: none;
   color: #106ebe;
+}
+
+/* Media queries for mobile devices with virtual keyboards */
+@media screen and (max-height: 450px) {
+  /* When keyboard is open (viewport height is reduced) */
+  .navbarStyle {
+    position: sticky;
+    height: 40px; /* Slightly smaller navbar when keyboard is open */
+    top: 0;
+  }
+  
+  .profileContent {
+    margin-top: 0;
+    padding-top: 10px; /* Reduced padding for keyboard open */
+  }
+}
+
+/* Fix for iOS Safari viewport height issues with virtual keyboard */
+@supports (-webkit-touch-callout: none) {
+  /* For iOS devices */
+  body, html {
+    height: -webkit-fill-available;
+  }
+  
+  .navbarStyle {
+    position: sticky;
+  }
+}
+
+/* Menu positioning styles */
+.menu-container {
+  position: absolute;
+  z-index: 99;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+/* Ensure proper stacking for dropdowns and menus */
+.dropdown-menu, .popup-menu {
+  position: absolute;
+  z-index: 99;
+}
+
+/* Ensure consistent experience across devices */
+@media (max-width: 768px) {
+  .App {
+    padding: 4px;
+  }
+  
+  .navbarStyle {
+    padding: 0.3rem 0.8rem !important;
+  }
+  
+  .nav-links {
+    margin-bottom: 10px;
+  }
+  
+  .nav-link {
+    padding: 6px 10px;
+    margin: 0 5px;
+    font-size: 0.9rem;
+  }
 }
