@@ -8,11 +8,16 @@ import OpenAIConfig from './components/OpenAIConfig';
 import { AuthenticatedTemplate, UnauthenticatedTemplate } from '@azure/msal-react';
 import './App.css';
 
+// Get the base URL from the environment or default to "/"
+const getBaseUrl = () => {
+    return process.env.PUBLIC_URL || "/";
+};
+
 /**
  * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
  */
 const MainContent = () => {
-    const [setIsConfigValid] = useState(false);
+    const [_, setIsConfigValid] = useState(false);
 
     const handleConfigChange = (isValid) => {
         setIsConfigValid(isValid);
@@ -42,7 +47,7 @@ export default function App() {
     };
 
     return (
-        <Router>
+        <Router basename={getBaseUrl()}>
             <PageLayout onSelectConversation={handleSelectConversation}>
                 <Routes>
                     <Route path="/" element={<OpenAIPage 
