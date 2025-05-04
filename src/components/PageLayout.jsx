@@ -29,7 +29,7 @@ export const PageLayout = (props) => {
 
     return (
         <>
-            <Navbar bg="transparent" variant="light" className="navbarStyle">
+            <Navbar bg="white" variant="light" className="navbarStyle" fixed="top">
                 <button className="menu-toggle" onClick={toggleSideMenu} aria-label="Toggle navigation menu">
                     <span className="menu-toggle-icon"></span>
                 </button>

@@ -171,78 +171,77 @@ const ChatInterface = ({ savedConversation }) => {
             inputRef.current.style.height = 'auto';
             inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, 150)}px`;
         }
-    }, []);
-
-    return (
-        <div className="chat-container">
-            {error && (
-                <div className="chat-error-banner">
-                    <p>{error}</p>
-                    <button onClick={() => setError(null)}>×</button>
+    }, []);    return (
+        <>            <div className="chat-container">
+                {error && (
+                    <div className="chat-error-banner">
+                        <p>{error}</p>
+                        <button onClick={() => setError(null)}>×</button>
+                    </div>
+                )}
+                <div className="chat-messages">
+                    {messages.length === 0 ? (
+                        <div className="empty-chat">
+                            <p>Start a conversation with Azure OpenAI</p>
+                        </div>
+                    ) : (messages.map((message, index) => (
+                        <div
+                            key={index}
+                            className={`message ${message.role === "user" ? "user-message" : "assistant-message"} ${message.isError ? "error-message" : ""}`}
+                        >
+                            <div className="message-bubble">
+                                {message.role === "assistant" ? (
+                                    <div className="markdown-content">
+                                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                                    </div>
+                                ) : (
+                                    <p>{message.content}</p>)}
+                            </div>
+                            <div className="message-info">
+                                {message.role === "user" ? "You" : "Assistant"} • {message.timestamp || formatTimestamp(new Date())}
+                            </div>
+                        </div>
+                    ))
+                    )}
+                    {isLoading && (
+                        <div className="message assistant-message">
+                            <div className="message-bubble loading">
+                                <div className="typing-indicator">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>                            </div>
+                            </div>
+                            <div className="message-info">Assistant • {formatTimestamp(new Date())}</div>
+                        </div>
+                    )}
+                    <div ref={messagesEndRef}></div>
                 </div>
-            )}
-            <div className="chat-header">
-                <h3>{savedConversation?.title || "New Chat"}</h3>
             </div>
-
-            <div className="chat-messages">
-                {messages.length === 0 ? (
-                    <div className="empty-chat">
-                        <p>Start a conversation with Azure OpenAI</p>
-                    </div>
-                ) : (messages.map((message, index) => (
-                    <div
-                        key={index}
-                        className={`message ${message.role === "user" ? "user-message" : "assistant-message"} ${message.isError ? "error-message" : ""}`}
-                    >
-                        <div className="message-bubble">
-                            {message.role === "assistant" ? (
-                                <div className="markdown-content">
-                                    <ReactMarkdown>{message.content}</ReactMarkdown>
-                                </div>
-                            ) : (
-                                <p>{message.content}</p>)}
-                        </div>
-                        <div className="message-info">
-                            {message.role === "user" ? "You" : "Assistant"} • {message.timestamp || formatTimestamp(new Date())}
-                        </div>
-                    </div>
-                ))
-                )}
-                {isLoading && (
-                    <div className="message assistant-message">
-                        <div className="message-bubble loading">
-                            <div className="typing-indicator">
-                                <span></span>
-                                <span></span>
-                                <span></span>                            </div>
-                        </div>
-                        <div className="message-info">Assistant • {formatTimestamp(new Date())}</div>
-                    </div>
-                )}
-                <div ref={messagesEndRef}></div>
-            </div>            <form className="chat-input-form" onSubmit={handleSubmit}>                <textarea
-                value={input}
-                onChange={handleInputChange}
-                placeholder="Type your message..."
-                ref={inputRef}
-                disabled={isLoading}
-                rows="1"
-                className="chat-input-textarea"
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        if (input.trim()) {
-                            handleSubmit(e);
+            
+            <form className="chat-input-form" onSubmit={handleSubmit}>
+                <textarea
+                    value={input}
+                    onChange={handleInputChange}
+                    placeholder="Type your message..."
+                    ref={inputRef}
+                    disabled={isLoading}
+                    rows="1"
+                    className="chat-input-textarea"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            if (input.trim()) {
+                                handleSubmit(e);
+                            }
                         }
-                    }
-                }}
-            />                <button
-                type="submit"
-                disabled={isLoading || !input.trim()}
-                className="send-button"
-                aria-label="Send message"
-            >
+                    }}
+                />
+                <button
+                    type="submit"
+                    disabled={isLoading || !input.trim()}
+                    className="send-button"
+                    aria-label="Send message"
+                >
                     {isLoading ? (
                         <span className="sending-indicator"></span>
                     ) : (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -251,7 +250,7 @@ const ChatInterface = ({ savedConversation }) => {
                     )}
                 </button>
             </form>
-        </div>
+        </>
     );
 };
 
