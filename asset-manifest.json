@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/azure-open-ai-client/static/css/main.e5e1d5b2.css",
-    "main.js": "/azure-open-ai-client/static/js/main.498bc0ee.js",
+    "main.css": "/azure-open-ai-client/static/css/main.b77c7bb7.css",
+    "main.js": "/azure-open-ai-client/static/js/main.bc972fdc.js",
     "index.html": "/azure-open-ai-client/index.html",
-    "main.e5e1d5b2.css.map": "/azure-open-ai-client/static/css/main.e5e1d5b2.css.map",
-    "main.498bc0ee.js.map": "/azure-open-ai-client/static/js/main.498bc0ee.js.map"
+    "main.b77c7bb7.css.map": "/azure-open-ai-client/static/css/main.b77c7bb7.css.map",
+    "main.bc972fdc.js.map": "/azure-open-ai-client/static/js/main.bc972fdc.js.map"
   },
   "entrypoints": [
-    "static/css/main.e5e1d5b2.css",
-    "static/js/main.498bc0ee.js"
+    "static/css/main.b77c7bb7.css",
+    "static/js/main.bc972fdc.js"
   ]
 }
