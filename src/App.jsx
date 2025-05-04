@@ -17,7 +17,7 @@ const getBaseUrl = () => {
  * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
  */
 const MainContent = () => {
-    const [_, setIsConfigValid] = useState(false);
+    const [, setIsConfigValid] = useState(false);
 
     const handleConfigChange = (isValid) => {
         setIsConfigValid(isValid);
