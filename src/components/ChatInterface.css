@@ -11,6 +11,7 @@
     touch-action: manipulation; /* Controls how touchscreen users can interact with element */
     overscroll-behavior: contain; /* Prevents bounce effects on iOS */
     padding-top: 55px; /* Add padding for navigator */
+    z-index: 800; /* Lowest z-index in our stacking order */
 }
 
 .chat-error-banner {
@@ -130,7 +131,7 @@
     left: 0;
     right: 0;
     background-color: #fff;
-    z-index: 10;
+    z-index: 900; /* Higher than chat container but lower than navbar */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
